@@ -75,6 +75,9 @@ def test_execute_request_error_includes_traceback() -> None:
     assert error_message["type"] == "error"
     assert error_message["data"]["error_type"] == "RuntimeError"
     assert error_message["data"]["message"] == "boom"
+    top_level_traceback = error_message["data"]["traceback"]
+    assert "Traceback (most recent call last)" in top_level_traceback
+    assert "RuntimeError: boom" in top_level_traceback
     traceback = error_message["data"]["args"]["traceback"]
     assert "Traceback (most recent call last)" in traceback
     assert "RuntimeError: boom" in traceback

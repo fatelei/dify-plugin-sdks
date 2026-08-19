@@ -104,7 +104,8 @@ class IOServer(ABC):
                 context,
             )
         except Exception as e:
-            args = {"traceback": traceback.format_exc()}
+            formatted_traceback = traceback.format_exc()
+            args = {"traceback": formatted_traceback}
             if isinstance(e, InvokeError):
                 args["description"] = e.description
 
@@ -120,6 +121,7 @@ class IOServer(ABC):
                     data={
                         "error_type": type(e).__name__,
                         "message": str(e),
+                        "traceback": formatted_traceback,
                         "args": args,
                     }
                 ),
